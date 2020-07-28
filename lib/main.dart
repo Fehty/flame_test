@@ -1,3 +1,4 @@
+import 'package:flame/animation.dart' as animation;
 import 'dart:math' as math;
 import 'package:flame/flame.dart';
 import 'package:flutter/material.dart';
@@ -7,16 +8,17 @@ import 'package:flame/box2d/contact_callbacks.dart';
 import 'package:flame/gestures.dart';
 import 'package:flame/palette.dart';
 import 'package:box2d_flame/box2d.dart';
-import 'package:flame/animation.dart' as animation;
 import 'flame_boundaries/boundaries.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Flame.util.fullScreen();
   final MyBox2D box = MyBox2D();
-  final MyGame game = MyGame(box);
+  game = MyGame(box);
   runApp(game.widget);
 }
+
+MyGame game;
 
 class Ball extends BodyComponent {
   Paint originalPaint, currentPaint;
@@ -114,7 +116,10 @@ class WhiteBallContactCallback extends ContactCallback<Ball, WhiteBall> {
   }
 
   @override
-  void end(Ball ball, WhiteBall whiteBall, Contact contact) {}
+  void end(Ball ball, WhiteBall whiteBall, Contact contact) {
+    Vector2 position = Vector2(20, 30);
+    game.box.add(Ball(position, game.box));
+  }
 }
 
 class BallWallContactCallback extends ContactCallback<Ball, Wall> {
@@ -124,7 +129,10 @@ class BallWallContactCallback extends ContactCallback<Ball, Wall> {
   }
 
   @override
-  void end(Ball ball1, Wall wall, Contact contact) {}
+  void end(Ball ball1, Wall wall, Contact contact) {
+    Vector2 position = Vector2(20, 30);
+    game.box.add(Ball(position, game.box));
+  }
 }
 
 class MyGame extends Box2DGame with TapDetector {
