@@ -1,9 +1,5 @@
 import 'dart:math';
-
-import 'package:flame/anchor.dart';
-import 'package:flame/sprite.dart';
 import 'package:flame/widgets/animation_widget.dart';
-import 'package:flame/widgets/sprite_widget.dart';
 import 'package:flame_test/main.dart';
 import 'package:flame_test/zflutter_test/linear_equation.dart';
 import 'package:flutter/cupertino.dart';
