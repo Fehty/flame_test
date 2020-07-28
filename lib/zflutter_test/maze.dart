@@ -22,9 +22,19 @@ class _MazeState extends State<Maze> with TickerProviderStateMixin {
 
   Point lastPoint = Point(0.0, 0.0);
   Point newPoint;
+  List<Point> border;
 
   AnimationController _xCoordinateController;
   Animation _xCoordinateAnimation;
+
+  @override
+  void initState() {
+    double y = -300;
+    while (y < 300) {
+      y += 1;
+    }
+    super.initState();
+  }
 
   void onTapDown(BuildContext context, TapDownDetails details) {
     final RenderBox box = context.findRenderObject();
@@ -35,6 +45,7 @@ class _MazeState extends State<Maze> with TickerProviderStateMixin {
     double y =
         (screenSize.height / 2 - screenSize.height + localOffset.dy) + 48;
 
+    print(y);
     newPoint = Point(x, y);
 
     _xCoordinateController =
@@ -59,15 +70,20 @@ class _MazeState extends State<Maze> with TickerProviderStateMixin {
 //    double engineHeight = (screenSize.height / 2 - screenSize.height) + height;
 //    engineScreenSize = Size(engineWidth, engineHeight);
     return Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
         color: Colors.indigo,
         child: GestureDetector(
             onTapDown: (TapDownDetails details) => onTapDown(context, details),
-            child: Stack(children: [
-              ZIllustration(zoom: 1, children: [
-//                ZPositioned.translate(
-//                    x: lastPoint.x,
-//                    y: lastPoint.y,
-////                  rotate: ZVector.only(x: -controller.rotate.x / 2, y: -controller.rotate.y / 2),
+            child: ZIllustration(zoom: 1, children: [
+              ZPositioned.translate(
+                  x: lastPoint.x,
+                  y: lastPoint.y,
+                  child: ZToBoxAdapter(
+                      width: 200,
+                      height: 200,
+                      child: AnimationWidget(animation: anim))),
+//                  rotate: ZVector.only(x: -controller.rotate.x / 2, y: -controller.rotate.y / 2),
 ////                rotate: controller.rotate,
 ////                  child: ZToBoxAdapter(
 ////                      width: 100,
@@ -77,28 +93,28 @@ class _MazeState extends State<Maze> with TickerProviderStateMixin {
 ////                        width: 100,
 ////                        height: 100,
 ////                      )),
-//                    child: ZToBoxAdapter(
+//                  ZToBoxAdapter(
 //                        width: 200,
 //                        height: 200,
-//                        child: AnimationWidget(animation: anim))),
-                ZShape(
-                  path: [
-                    ZMove.only(x: -32, y: -40), // start at top left
-                    ZLine.only(x: 32, y: -40), // line to top right
-                    ZLine.only(x: -32, y: 40), // line to bottom left
-                    ZLine.only(x: 32, y: 40), // line to bottom right
-                  ],
-                  closed: false,
-                  stroke: 100,
-                  color: Color(0xff663366),
-                )
+//                        child: AnimationWidget(animation: anim)),
+//              ZShape(
+//                path: [
+//                  ZMove.only(x: -32, y: -40), // start at top left
+//                  ZLine.only(x: 32, y: -40), // line to top right
+//                  ZLine.only(x: -32, y: 40), // line to bottom left
+//                  ZLine.only(x: 32, y: 40), // line to bottom right
+//                ],
+//
+//                closed: true,
+//                stroke: 10,
+//                color: Colors.red,
+//              )
 //                ZPositioned(
 //                    rotate: ZVector.only(z: -3.5),
 //                    child: ZToBoxAdapter(
 //                        width: 150,
 //                        height: 600,
 //                        child: Container(color: Colors.cyan)))
-              ])
             ])));
   }
 }
