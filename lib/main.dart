@@ -116,10 +116,7 @@ class WhiteBallContactCallback extends ContactCallback<Ball, WhiteBall> {
   }
 
   @override
-  void end(Ball ball, WhiteBall whiteBall, Contact contact) {
-    Vector2 position = Vector2(20, 30);
-    game.box.add(Ball(position, game.box));
-  }
+  void end(Ball ball, WhiteBall whiteBall, Contact contact) {}
 }
 
 class BallWallContactCallback extends ContactCallback<Ball, Wall> {
@@ -133,6 +130,7 @@ class BallWallContactCallback extends ContactCallback<Ball, Wall> {
     Vector2 position = Vector2(20, 30);
     game.box.add(Ball(position, game.box));
   }
+
 }
 
 class MyGame extends Box2DGame with TapDetector {
